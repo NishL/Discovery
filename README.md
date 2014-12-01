@@ -1,4 +1,4 @@
-# Disocvery Engine
+# Discovery Engine
 
 The is the code that was originally used during a semester Stanford University's Venture Lab for our Startup Project.
 Team Members:
