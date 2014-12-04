@@ -22,18 +22,24 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-    @product.save
-    respond_with(@product)
+     if @product.save
+      redirect_to @product, notice: "Product was added successfully."
+    else
+      render action: "new"
+    end
   end
 
   def update
-    @product.update(product_params)
-    respond_with(@product)
+    if @product.update(product_params)
+      redirect_to @product, notice: "Product was successfully updated."
+    else 
+      render action: "edit"
+    end
   end
 
   def destroy
     @product.destroy
-    respond_with(@product)
+    redirect_to products_url
   end
 
   private
