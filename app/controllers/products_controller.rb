@@ -13,15 +13,14 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
-    respond_with(@product)
+    @product = current_user.products.build    
   end
 
   def edit
   end
 
   def create
-    @product = Product.new(product_params)
+    @product = current_user.products.build(product_params)
      if @product.save
       redirect_to @product, notice: "Product was added successfully."
     else
@@ -45,9 +44,11 @@ class ProductsController < ApplicationController
   private
     def set_product
       @product = Product.find(params[:id])
+      redirect_to products_path, notice: "Not authorized to edit this product" if @pin.nil?
     end
 
+    #Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:description)
+      params.require(:product).permit(:description, image:)
     end
 end
